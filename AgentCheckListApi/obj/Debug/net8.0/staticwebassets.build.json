@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "QdNO8QLKJZ7BxzO5ABMSTYTjZ69WCjE3zxaDZyK+USQ=",
+  "Source": "AgentCheckListApi",
+  "BasePath": "_content/AgentCheckListApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
