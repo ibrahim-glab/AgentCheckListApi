@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AgentCheckListApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37db69070269ca30e64368c95bddf1e93e3ad106")]
 [assembly: System.Reflection.AssemblyProductAttribute("AgentCheckListApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AgentCheckListApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

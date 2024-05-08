@@ -43,3 +43,4 @@ c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\
 c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\AgentCheckListApi.pdb
 c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\AgentCheckListApi.genruntimeconfig.cache
 c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\ref\AgentCheckListApi.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\AgentCheckListApi.sourcelink.json

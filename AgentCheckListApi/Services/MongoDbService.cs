@@ -22,12 +22,7 @@ namespace AgentCheckListApi.Services
             return _database.GetCollection<T>(name);
         }
 
-        //Get All Data
-        public List<T> GetAllData()
-        {
-            var collection = GetCollection<T>(typeof(T).Name);
-            return collection.Find(new BsonDocument()).ToList();
-        }
+     
 
         
     }
