@@ -29,8 +29,8 @@ namespace AgentCheckListApi.Controllers{
         [HttpGet]
         public IActionResult Get()
         {
-           var collection = _mongoDbService.GetCollection<Organization>("organizations");
-           var list = collection.Find(FilterDefinition<Organization>.Empty).ToList();
+           var collection = _mongoDbService.GetCollection<User>("users");
+           var list = collection.Find(FilterDefinition<User>.Empty).ToList();
             return Ok(list);
         }
 

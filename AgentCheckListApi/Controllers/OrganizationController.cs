@@ -145,6 +145,27 @@ namespace AgentCheckListApi.Controllers
             }
            
         }
+
+        // api/Organization/{id}    
+        // [HttpPatch("{id}")]
+        // public IActionResult Patch(string id)
+        // {
+        //     // add Validation 
+        //     if (id == null)
+        //     {
+        //         return BadRequest();
+        //     }
+
+        //     var collection = _mongoDbService.GetCollection<Organization>("organizations");
+
+
+        //     var filter = Builders<Organization>.Filter.Eq("_id", ObjectId.Parse(id));
+        //     var updateResult = collection.FindOneAndUpdate<Organization>(filter, Builders<Organization>.Update.Set("Organization_status", true), new FindOneAndUpdateOptions<Organization, Organization>() { ReturnDocument = ReturnDocument.After });
+        //     if (updateResult == null)
+        //         return NotFound("Organization not found");
+        //     return Ok(updateResult);         
+        //     //return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        // }
       
 
     }
