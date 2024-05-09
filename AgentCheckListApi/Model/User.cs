@@ -26,9 +26,8 @@ public class User
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
-    [Required]
     [BsonElement("organizationId")]
-    public string OrganizationId { get; set; }
+    public string? OrganizationId { get; set; }
     [Required]
     [BsonElement("orgAdminId")]
 
@@ -55,7 +54,7 @@ public class User
     [BsonElement("userMobileNumber")]
     public string UserMobileNumber { get; set; }
     [Required]
-    [BsonElement("UserNationalId")]
+    [BsonElement("userNationalId")]
     public string UserNationalId { get; set; }
     [Required]
 

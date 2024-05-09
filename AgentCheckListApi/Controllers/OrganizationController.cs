@@ -2,6 +2,7 @@
 //add using statements
 
 using AgentCheckListApi.Helper;
+using AgentCheckListApi.Interfaces;
 using AgentCheckListApi.Model;
 using AgentCheckListApi.Services;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +17,12 @@ namespace AgentCheckListApi.Controllers
     {
         private readonly ILogger<OrganizationController> _logger;
         private readonly MongoDbService<Organization> _mongoDbService;
-        public OrganizationController(ILogger<OrganizationController> logger, MongoDbService<Organization> mongoDbService)
+        private readonly IRegisterationService _registerationService;
+        public OrganizationController(IRegisterationService regestirationService, ILogger<OrganizationController> logger, MongoDbService<Organization> mongoDbService)
         {
             _logger = logger;
             _mongoDbService = mongoDbService;
+            _registerationService = regestirationService;
         }
 
 
@@ -49,9 +52,9 @@ namespace AgentCheckListApi.Controllers
 
             // query first if there is a record with same LicenseId 
 
-            if(!ModelState.IsValid)     
+            if (!ModelState.IsValid)
                 return BadRequest();
-            
+
             // add Validation
             if (organization == null)
             {
@@ -80,11 +83,11 @@ namespace AgentCheckListApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] Organization organization)
         {
-         var collection = _mongoDbService.GetCollection<Organization>("organizations");
+            var collection = _mongoDbService.GetCollection<Organization>("organizations");
 
-            if(!ModelState.IsValid)     
+            if (!ModelState.IsValid)
                 return BadRequest();
-            
+
             // add Validation
             if (organization == null)
             {
@@ -106,20 +109,20 @@ namespace AgentCheckListApi.Controllers
                 .Set("Organization_name", organization.Organization_name)
                 .Set("Organization_status", organization.Organization_status)
                 .Set("OrganizationFinancialId", organization.OrganizationFinancialId)
-                .Set("OrganizationType", organization.OrganizationType) , new FindOneAndUpdateOptions<Organization, Organization>() { ReturnDocument = ReturnDocument.After }
+                .Set("OrganizationType", organization.OrganizationType), new FindOneAndUpdateOptions<Organization, Organization>() { ReturnDocument = ReturnDocument.After }
                 );
-               if (updateResult == null)
-                return NotFound("Organization not found");
+                if (updateResult == null)
+                    return NotFound("Organization not found");
                 return Ok(updateResult);
 
             }
             catch (System.Exception ex)
             {
-                 // TODO
-                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                // TODO
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            
-          
+
+
         }
 
 
@@ -130,44 +133,102 @@ namespace AgentCheckListApi.Controllers
 
             try
             {
-            var collection = _mongoDbService.GetCollection<Organization>("organizations");
-            var filter = Builders<Organization>.Filter.Eq("_Id", id);
+                var collection = _mongoDbService.GetCollection<Organization>("organizations");
+                var filter = Builders<Organization>.Filter.Eq("_Id", id);
 
-            var deleteResult = collection.DeleteOne(filter);
-            if (deleteResult.DeletedCount == 0)
-                return NotFound("Organization not found");
-            return Ok();
+                var deleteResult = collection.DeleteOne(filter);
+                if (deleteResult.DeletedCount == 0)
+                    return NotFound("Organization not found");
+                return Ok();
             }
             catch (System.Exception ex)
             {
-                 // TODO
-                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                // TODO
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-           
+
+        }
+        // Post: api/Organization/{id}/Users
+        [HttpPost("{id}/Users")]
+        public IActionResult Post(string id, [FromBody] User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var ServiceResult = _registerationService.RegisterUser(id, user);
+                if (!ServiceResult.Success)
+                    return NotFound(ServiceResult.Message);
+                return Ok(user);
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
         }
 
-        // api/Organization/{id}    
-        // [HttpPatch("{id}")]
-        // public IActionResult Patch(string id)
-        // {
-        //     // add Validation 
-        //     if (id == null)
-        //     {
-        //         return BadRequest();
-        //     }
+        //get:api/Organization/{id}/Users/{userId}
+        [HttpGet("{id}/Users/{userId}")]
+        public IActionResult Get(string id, string userId)
+        {
+            var ServiceResult = _registerationService.GetUser(userId, id);
+            if (!ServiceResult.Success)
+                return NotFound(ServiceResult.Message);
+            return Ok(ServiceResult.Data);
+        }
+        // api/Organization/{id}/Users/{userId}
+        [HttpDelete("{id}/Users/{userId}")]
+        public IActionResult Delete(string id, string userId)
+        {
+            var ServiceResult = _registerationService.DeleteUser(userId, id);
+            if (!ServiceResult.Success)
+                return NotFound(ServiceResult.Message);
 
-        //     var collection = _mongoDbService.GetCollection<Organization>("organizations");
+            return Ok(ServiceResult.Data);
+        }
+        // api/Organization/{id}/Users/{userId}
+        [HttpPut("{id}/Users/{userId}")]
+        public IActionResult Put(string id, string userId, [FromBody] User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var organization = _registerationService.GetOrganizationById(id);
+            if (organization is null)
+                return NotFound("Organization not found");
+            user.OrganizationId = id;
+            var ServiceResult = _registerationService.UpdateUser(userId, user);
 
+            if (!ServiceResult.Success)
+                return NotFound(ServiceResult.Message);
 
-        //     var filter = Builders<Organization>.Filter.Eq("_id", ObjectId.Parse(id));
-        //     var updateResult = collection.FindOneAndUpdate<Organization>(filter, Builders<Organization>.Update.Set("Organization_status", true), new FindOneAndUpdateOptions<Organization, Organization>() { ReturnDocument = ReturnDocument.After });
-        //     if (updateResult == null)
-        //         return NotFound("Organization not found");
-        //     return Ok(updateResult);         
-        //     //return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        // }
-      
+            return Ok(ServiceResult.Data);
+        }
 
+        //api: Organization/{id}/Users
+        [HttpGet("{id}/Users")]
+        public IActionResult GetOrgnizationUsers(string id)
+        {
+            var collection = _mongoDbService.GetCollection<Organization>("organizations");
+            var filterid = Builders<Organization>.Filter.Eq("_id", ObjectId.Parse(id));
+            var list = collection.Find(filterid).ToList();
+            if (list.Count == 0)
+                return NotFound("Organization not found");
+            var collectionUser = _mongoDbService.GetCollection<User>("users");
+            //get all users from organization where OrganizationId = id
+            var filter = Builders<User>.Filter.Eq("OrganizationId", ObjectId.Parse(id));
+            var listUser = collectionUser.Find(filter).ToList();
+            return Ok(listUser);
+        }
     }
 }
 

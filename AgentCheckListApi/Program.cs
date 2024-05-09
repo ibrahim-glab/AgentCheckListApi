@@ -1,4 +1,5 @@
 using AgentCheckListApi.Helper;
+using AgentCheckListApi.Interfaces;
 using AgentCheckListApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.Configure<MongoDb>(builder.Configuration.GetSection("MongoDb"));
 //        services.AddSingleton(typeof(MongoDbService<>));
 builder.Services.AddSingleton(typeof(MongoDbService<>));
+builder.Services.AddSingleton<IRegisterationService , RegisteratoinService >();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
