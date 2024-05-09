@@ -101,7 +101,7 @@ namespace AgentCheckListApi.Services
            return new ServiceResult{Success = false, Message = "Organization Not Found"};
         }
 
-        public ServiceResult GetUser(string id , string organizationId)
+        public ServiceResult GetUserByOrganization(string id , string organizationId)
         {
          if (IsOrganizationAlreadyRegistered(organizationId))
             {

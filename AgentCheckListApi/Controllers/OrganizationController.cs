@@ -179,7 +179,7 @@ namespace AgentCheckListApi.Controllers
         [HttpGet("{id}/Users/{userId}")]
         public IActionResult Get(string id, string userId)
         {
-            var ServiceResult = _registerationService.GetUser(userId, id);
+            var ServiceResult = _registerationService.GetUserByOrganization(userId, id);
             if (!ServiceResult.Success)
                 return NotFound(ServiceResult.Message);
             return Ok(ServiceResult.Data);

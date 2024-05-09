@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "diWf5PFR59qz3QhwwX/75i8MEBSo5e0v8B3OBkHDZhTCVlnUNFPZaAmTfGZc37GDFtFv462XoVVszWX/LbCr4g==",
+  "dgSpecHash": "SXkBBIaTjXQXHwO6QYJ1jDeHXWSHgrFzpj9DOr5XvXiT8b+w9+H0vsbqs0uGQ6Evw0hxdAUXjZz7qIFmwt4dTg==",
   "success": true,
-  "projectFilePath": "c:\\Users\\Bebo\\source\\repos\\AgentCheckListApi\\AgentCheckListApi\\AgentCheckListApi.csproj",
+  "projectFilePath": "C:\\Users\\Bebo\\source\\repos\\AgentCheckListApi\\AgentCheckListApi\\AgentCheckListApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bebo\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\Bebo\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

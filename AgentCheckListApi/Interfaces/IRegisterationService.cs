@@ -12,7 +12,7 @@ namespace AgentCheckListApi.Interfaces
      
         public ServiceResult UpdateUser(string id,User user);
         public ServiceResult DeleteUser(string id , string organizationId);
-        public ServiceResult GetUser(string id , string organizationId);
+        public ServiceResult GetUserByOrganization(string id , string organizationId);
         public List<User> GetUsers();
         public bool RegisterOrganization(Organization organization);
         public bool UpdateOrganization(Organization organization);
