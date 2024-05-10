@@ -126,8 +126,6 @@ namespace AgentCheckListApi.Services
          }
 
          var ResultForDeletePermission = _permissions.FindOneAndDelete(Builders<Permission>.Filter.Eq("UserMobileNumber", olduser.UserMobileNumber));
-
-
             user.Id = ObjectId.GenerateNewId().ToString();
             user.OrgAdminId = user.Id;
             user =  _users.FindOneAndReplace(Builders<User>.Filter.Eq("_id", ObjectId.Parse(user.Id)), user , new FindOneAndReplaceOptions<User> {IsUpsert = true , ReturnDocument = ReturnDocument.After});

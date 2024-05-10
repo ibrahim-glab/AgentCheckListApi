@@ -19,11 +19,13 @@ namespace AgentCheckListApi.Controllers
         private readonly ILogger<OrganizationController> _logger;
         private readonly MongoDbService<Organization> _mongoDbService;
         private readonly IRegisterationService _registerationService;
-        public OrganizationController(IRegisterationService regestirationService, ILogger<OrganizationController> logger, MongoDbService<Organization> mongoDbService)
+        private readonly IInspectionService _inspectionService;
+        public OrganizationController(IRegisterationService regestirationService, ILogger<OrganizationController> logger, MongoDbService<Organization> mongoDbService , IInspectionService inspectionService)
         {
             _logger = logger;
             _mongoDbService = mongoDbService;
             _registerationService = regestirationService;
+            _inspectionService = inspectionService;
         }
 
 
@@ -237,6 +239,14 @@ namespace AgentCheckListApi.Controllers
             var listUser = collectionUser.Find(filter).ToList();
             return Ok(listUser);
         }
+        // api/Organization/{id}/CheckLists
+        [HttpGet("{id}/CheckLists")]
+        public IActionResult GetOrgnizationCheckLists(string id)
+        {
+           var listCheckList = _inspectionService.GetCheckListsByOrganizationId(id);
+           return Ok(listCheckList);
+        }
+        
     }
 }
 
