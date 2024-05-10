@@ -69,5 +69,32 @@ namespace AgentCheckListApi.Controllers
             return Ok(ServiceResult);
         }
 
+        // Post : api/CheckList/{id}/Form
+
+        // Post : api/CheckList/{id}/Form
+        [HttpPost("{id}/Form")]
+        public IActionResult PostForm(string id, [FromBody] Form form)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var ServiceResult = _inspectionService.SumbitForm(id, form);
+            if (!ServiceResult.Success)
+                return NotFound(ServiceResult.Message);  
+            return Ok(ServiceResult);
+        }
+        // Get : api/CheckList/{id}/Form
+
+        // Get : api/CheckList/{id}/Form
+        [HttpGet("{id}/Form")]
+        public IActionResult GetAll(string id)
+        {
+            var result = _inspectionService.GetFormsByCheckListId(id);
+            if (!result.Success)
+                return NotFound(result);
+            return Ok(result);
+        }
+
+
+
     }
 }

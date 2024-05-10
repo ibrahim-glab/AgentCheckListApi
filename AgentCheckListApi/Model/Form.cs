@@ -15,7 +15,7 @@ namespace AgentCheckListApi.Model
     public DateTime SubmissionDate { get; set; } = DateTime.Now;
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string SubmissionID { get; set; }
+    public string? SubmissionID { get; set; }
     [BsonRepresentation(BsonType.ObjectId)]
     public string OrganizationID { get; set; }
     public string OrganizationName { get; set; }

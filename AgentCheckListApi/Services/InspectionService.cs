@@ -15,6 +15,8 @@ namespace AgentCheckListApi.Services
     {
         private readonly IMongoCollection<CheckList> _CheckList;
         private readonly IMongoQueryable<CheckList> _CheckListQueryable;
+        private readonly IMongoCollection<Form> _FormCollection;
+        private readonly IMongoQueryable<Form> _FormQueryable;
         private readonly IRegisterationService _registerationService;
 
 
@@ -23,7 +25,9 @@ namespace AgentCheckListApi.Services
             var client = new MongoClient(configuration.Value.ConnectionString);
             var database = client.GetDatabase(configuration.Value.Database);
             _CheckList = database.GetCollection<CheckList>("checklists");
+            _FormCollection = database.GetCollection<Form>("forms");
             _CheckListQueryable = _CheckList.AsQueryable();
+            _FormQueryable = _FormCollection.AsQueryable();
             _registerationService = registerationService  ;
         }
 
@@ -89,5 +93,27 @@ namespace AgentCheckListApi.Services
                 return new ServiceResult { Success = false, Message = ex.Message };
             }
     }
-}
+
+        public ServiceResult SumbitForm(string id, Form form)
+        {
+            if (GetCheckListById(id) is null)
+                return new ServiceResult { Success = false, Message = "CheckList not found" };
+            try
+            {
+                _FormCollection.InsertOne(form);
+                return new ServiceResult { Success = true, Message = "Form Sumbited", Data = form };
+            }
+            catch (System.Exception ex)
+            {
+                return new ServiceResult { Success = false, Message = ex.Message };
+            }           
+        }
+        // Get Forms By CheckListId
+        public ServiceResult GetFormsByCheckListId(string id){
+              if (GetCheckListById(id) is null)
+                return new ServiceResult { Success = false, Message = "CheckList not found" };
+            var forms = _FormQueryable.Where(x => x.ChecklistID == id).ToList();
+            return new ServiceResult { Success = true, Message = "Forms Found", Data = forms };
+        }
+    }
 }

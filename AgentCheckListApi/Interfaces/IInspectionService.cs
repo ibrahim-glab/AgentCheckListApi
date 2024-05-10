@@ -15,5 +15,8 @@ namespace AgentCheckListApi.Interfaces
         public ServiceResult DeleteCheckList(string id);
         public List<CheckList> GetCheckLists();
         public List<CheckList> GetCheckListsByOrganizationId(string organizationId);
+
+        public ServiceResult SumbitForm(string id , Form form);
+        public ServiceResult GetFormsByCheckListId(string id);
     }
 }
