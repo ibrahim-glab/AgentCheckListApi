@@ -44,3 +44,11 @@ c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\
 c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\AgentCheckListApi.genruntimeconfig.cache
 c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\ref\AgentCheckListApi.dll
 c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\obj\Debug\net8.0\AgentCheckListApi.sourcelink.json
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+c:\Users\Bebo\source\repos\AgentCheckListApi\AgentCheckListApi\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

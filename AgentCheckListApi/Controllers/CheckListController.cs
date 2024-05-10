@@ -4,6 +4,7 @@ using AgentCheckListApi.Helper;
 using AgentCheckListApi.Interfaces;
 using AgentCheckListApi.Model;
 using AgentCheckListApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 namespace AgentCheckListApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CheckListController : ControllerBase
@@ -21,12 +23,15 @@ namespace AgentCheckListApi.Controllers
         {
             _inspectionService = inspectionService;
         }
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet]  
         public IActionResult Get()
         {
             return Ok(_inspectionService.GetCheckLists());
         }
         // POST : api/CheckList
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
+
         [HttpPost]
         public IActionResult Post([FromBody] CheckList checklist)
         {
@@ -46,6 +51,7 @@ namespace AgentCheckListApi.Controllers
             return Ok(checklist);
         }
         // PUT : api/CheckList/{id}
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] CheckList checklist)
         {
@@ -58,6 +64,7 @@ namespace AgentCheckListApi.Controllers
                 return NotFound(ServiceResult.Message);
             return Ok(ServiceResult.Data);
         }
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
 
         // DELETE : api/CheckList/{id}
         [HttpDelete("{id}")]
@@ -85,6 +92,7 @@ namespace AgentCheckListApi.Controllers
         // Get : api/CheckList/{id}/Form
 
         // Get : api/CheckList/{id}/Form
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
         [HttpGet("{id}/Form")]
         public IActionResult GetAll(string id)
         {

@@ -6,6 +6,7 @@ using AgentCheckListApi.Helper;
 using AgentCheckListApi.Interfaces;
 using AgentCheckListApi.Model;
 using AgentCheckListApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 namespace AgentCheckListApi.Controllers
 {
+    [Authorize(Roles = "SuperAdmin,OrgAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PermissionController : ControllerBase

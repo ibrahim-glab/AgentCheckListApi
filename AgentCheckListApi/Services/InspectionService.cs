@@ -115,5 +115,11 @@ namespace AgentCheckListApi.Services
             var forms = _FormQueryable.Where(x => x.ChecklistID == id).ToList();
             return new ServiceResult { Success = true, Message = "Forms Found", Data = forms };
         }
+
+        public ServiceResult GetFormsByUserId(string userId)
+        {
+            var forms = _FormQueryable.Where(x => x.UserID == userId).ToList();
+            return new ServiceResult{Success = true, Message = "Forms Found", Data = forms };
+        }
     }
 }

@@ -6,12 +6,14 @@ using AgentCheckListApi.Helper;
 using AgentCheckListApi.Interfaces;
 using AgentCheckListApi.Model;
 using AgentCheckListApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 namespace AgentCheckListApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrganizationController : ControllerBase
@@ -30,6 +32,7 @@ namespace AgentCheckListApi.Controllers
 
 
         //Get: api/Organization All
+        [Authorize(Roles ="SuperAdmin")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -39,6 +42,8 @@ namespace AgentCheckListApi.Controllers
         }
 
         //Get   : api/Organization/{id}
+        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
@@ -49,6 +54,7 @@ namespace AgentCheckListApi.Controllers
         }
 
         //Post : api/Organization
+        [Authorize(Roles ="SuperAdmin")]
         [HttpPost]
         public IActionResult Post([FromBody] Organization organization)
         {
@@ -81,6 +87,7 @@ namespace AgentCheckListApi.Controllers
             }
 
         }
+        [Authorize(Roles ="SuperAdmin")]
 
         //Put : api/Organization/{id} Mongo 
         [HttpPut("{id}")]
@@ -128,7 +135,7 @@ namespace AgentCheckListApi.Controllers
 
         }
 
-
+        [Authorize(Roles ="SuperAdmin")]
         // api/Organization/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
@@ -152,6 +159,8 @@ namespace AgentCheckListApi.Controllers
 
         }
         // Post: api/Organization/{id}/Users
+        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+
         [HttpPost("{id}/Users")]
         public IActionResult Post(string id, [FromBody] User user)
         {
@@ -184,7 +193,7 @@ namespace AgentCheckListApi.Controllers
             }
 
         }
-
+        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
         //get:api/Organization/{id}/Users/{userId}
         [HttpGet("{id}/Users/{userId}")]
         public IActionResult Get(string id, string userId)
@@ -194,6 +203,7 @@ namespace AgentCheckListApi.Controllers
                 return NotFound(ServiceResult.Message);
             return Ok(ServiceResult.Data);
         }
+        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
         // api/Organization/{id}/Users/{userId}
         [HttpDelete("{id}/Users/{userId}")]
         public IActionResult Delete(string id, string userId)
@@ -204,6 +214,7 @@ namespace AgentCheckListApi.Controllers
 
             return Ok(ServiceResult.Data);
         }
+        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
         // api/Organization/{id}/Users/{userId}
         [HttpPut("{id}/Users/{userId}")]
         public IActionResult Put(string id, string userId, [FromBody] User user)
@@ -223,7 +234,7 @@ namespace AgentCheckListApi.Controllers
 
             return Ok(ServiceResult.Data);
         }
-
+        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
         //api: Organization/{id}/Users
         [HttpGet("{id}/Users")]
         public IActionResult GetOrgnizationUsers(string id)

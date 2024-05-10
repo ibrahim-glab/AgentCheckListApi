@@ -18,5 +18,6 @@ namespace AgentCheckListApi.Interfaces
 
         public ServiceResult SumbitForm(string id , Form form);
         public ServiceResult GetFormsByCheckListId(string id);
+        public ServiceResult GetFormsByUserId(string userId);
     }
 }
