@@ -13,7 +13,8 @@ namespace AgentCheckListApi.Interfaces
         public ServiceResult UpdateUser(string id,User user);
         public ServiceResult DeleteUser(string id , string organizationId);
         public ServiceResult GetUserByOrganization(string id , string organizationId);
-        public ServiceResult RegisterOrganizationAdmin( string SuperAdminId, User user , Permission permission);
+        public ServiceResult RegisterOrganizationAdmin(  User user , Permission permission ,string SuperAdminId  ="");
+        public ServiceResult UpdateOrganizationAdmin(  User user , Permission permission);
         public List<User> GetUsers();
         public bool RegisterOrganization(Organization organization);
 

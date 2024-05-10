@@ -58,12 +58,33 @@ namespace AgentCheckListApi.Controllers
                 UserMobileNumber = user.UserMobileNumber,
                 Role = UserRole.OrgAdmin,
             };
-            ServiceResult serviceResult = _registerationService.RegisterOrganizationAdmin(id, user, permission1);
+            ServiceResult serviceResult = _registerationService.RegisterOrganizationAdmin( user, permission1 ,id);
             if (!serviceResult.Success)
                 return BadRequest(serviceResult.Message);
             return Ok(user);
         }
-        // Put: api/User/{id}/
+        // Put: api/User/{id}/OrganizationAdmin
+
+        [HttpPut("{id}/OrganizationAdmin")]
+        public IActionResult PutOrganizationAdmin(string id, [FromBody] User user)
+        {
+            try{
+            if (user == null)
+                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest();
+                //new Permission{Id = ObjectId.GenerateNewId().ToString(), UserMobileNumber = user.UserMobileNumber, Role = UserRole.OrgAdmin , IsActive = user.IsActive}
+
+            ServiceResult serviceResult = _registerationService.UpdateOrganizationAdmin(user, new Permission { Id = ObjectId.GenerateNewId().ToString(), IsActive = user.IsActive, UserMobileNumber = user.UserMobileNumber, Role = UserRole.OrgAdmin });
+
+            return Ok(serviceResult);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return BadRequest(ModelState);
+            }
+        }
 
     }
 }

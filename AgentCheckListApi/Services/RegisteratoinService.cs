@@ -103,7 +103,7 @@ namespace AgentCheckListApi.Services
 
         }
         // RegisterOrganizationAdmin
-        public ServiceResult RegisterOrganizationAdmin(string SuperAdminId, User user, Permission permission)
+        public ServiceResult RegisterOrganizationAdmin( User user, Permission permission ,string SuperAdminId = "")
         {
            
           user.Id = ObjectId.GenerateNewId().ToString();
@@ -114,6 +114,27 @@ namespace AgentCheckListApi.Services
             return new ServiceResult { Success = true, Message = "User Created", Data = user };
 
         }   
+        //Update Organization admin
+        public ServiceResult UpdateOrganizationAdmin(User user , Permission permission)
+        {
+         var olduser = _usersquery.FirstOrDefault(x => x.OrgAdminId != null && x.OrganizationId == user.OrganizationId);
+         if(olduser is null){
+            var res = RegisterOrganizationAdmin( user, permission);
+            if (!res.Success)
+                return res;
+            return new ServiceResult { Success = true, Message = "User Created", Data = user };
+         }
+
+         var ResultForDeletePermission = _permissions.FindOneAndDelete(Builders<Permission>.Filter.Eq("UserMobileNumber", olduser.UserMobileNumber));
+
+
+            user.Id = ObjectId.GenerateNewId().ToString();
+            user.OrgAdminId = user.Id;
+            user =  _users.FindOneAndReplace(Builders<User>.Filter.Eq("_id", ObjectId.Parse(user.Id)), user , new FindOneAndReplaceOptions<User> {IsUpsert = true , ReturnDocument = ReturnDocument.After});
+            var res2 = _permissions.FindOneAndReplace(Builders<Permission>.Filter.Eq("UserMobileNumber  ", user.UserMobileNumber), permission, new FindOneAndReplaceOptions<Permission> { IsUpsert = true, ReturnDocument = ReturnDocument.After });
+            var ResultForUpdateMany = _users.UpdateMany(Builders<User>.Filter.Eq("OrgAdminId", olduser.OrgAdminId) & Builders<User>.Filter.Eq("OrganizationId", user.OrganizationId), Builders<User>.Update.Set("OrgAdminId", user.Id));
+         return new ServiceResult { Success = true, Message = "User Updated", Data = user };
+        }
 
         //private method to check if user is already registered or not
         private bool IsUserAlreadyRegistered(string phoneNumber, string nationalId)
@@ -202,6 +223,8 @@ namespace AgentCheckListApi.Services
             var list = _permissions.Find(FilterDefinition<Permission>.Empty).ToList();
             return list;
         }
+
+      
     }
 
 }
