@@ -23,7 +23,7 @@ public class Organization
     public bool Organization_status { get; set; } 
     [Required]
     // License Id and Unique
-    public string LicenseId { get; set; }
+    public required string LicenseId { get; set; }
     [Required]
 
     public string OrganizationType { get; set; }

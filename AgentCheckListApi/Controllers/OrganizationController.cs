@@ -1,6 +1,7 @@
 // Create organization Controller Web Api 
 //add using statements
 
+using AgentCheckListApi.Enums;
 using AgentCheckListApi.Helper;
 using AgentCheckListApi.Interfaces;
 using AgentCheckListApi.Model;
@@ -163,7 +164,14 @@ namespace AgentCheckListApi.Controllers
             }
             try
             {
-                var ServiceResult = _registerationService.RegisterUser(id, user);
+                Permission permission = new Permission{
+                    Id = ObjectId.GenerateNewId().ToString(),
+                    IsActive= user.IsActive,
+                    UserMobileNumber = user.UserMobileNumber,
+                    Role = UserRole.AgentField
+                };
+                user.OrganizationId = id;
+                var ServiceResult = _registerationService.RegisterUser(user , permission);
                 if (!ServiceResult.Success)
                     return NotFound(ServiceResult.Message);
                 return Ok(user);

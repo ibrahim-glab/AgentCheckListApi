@@ -9,7 +9,6 @@ User National ID
 User Email
 */
 
-//add using statements
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +18,6 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 namespace AgentCheckListApi.Model{
-// Create Class User with Properties
 [BsonIgnoreExtraElements]
 public class User
 {
@@ -27,37 +25,34 @@ public class User
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
     [BsonElement("organizationId")]
-    public string? OrganizationId { get; set; }
-    [Required]
-    [BsonElement("orgAdminId")]
+    [BsonRepresentation(BsonType.ObjectId)]
 
-    public string OrgAdminId { get; set; }
+    public string? OrganizationId { get; set; }
+    [BsonElement("orgAdminId")]
+    [BsonRepresentation(BsonType.ObjectId)]
+
+    public string? OrgAdminId { get; set; }
     [Required]
     [BsonElement("userStatus")]
-
     public bool IsActive { get; set; }
     [Required]
-    //businessUserId
     [BsonElement("businessUserId")]
     public int BusinessUserId { get; set; }
     [Required]
-//username
     [BsonElement("username")]
     [BsonRepresentation(BsonType.String)]
-    public string Username { get; set; }
+    public required string Username { get; set; }
     [Required]
-//userPassword
     [BsonElement("userPassword")]
     [BsonRepresentation(BsonType.String)]
-    public string UserPassword { get; set; }
+    public required string UserPassword { get; set; }
     [Required]
     [BsonElement("userMobileNumber")]
-    public string UserMobileNumber { get; set; }
+    public required string UserMobileNumber { get; set; }
     [Required]
     [BsonElement("userNationalId")]
-    public string UserNationalId { get; set; }
+    public required string UserNationalId { get; set; }
     [Required]
-
-    public string UserEmail { get; set; }
+    public required string UserEmail { get; set; }
 }
 }
