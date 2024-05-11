@@ -5,9 +5,7 @@ This the Endpoints For the AgentCheckList Project
 
 - [Models](#Models)
 - [ApiEndpoints](#ApiEndpoints)
-- [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Models
 
