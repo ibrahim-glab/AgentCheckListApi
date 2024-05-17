@@ -1,6 +1,7 @@
 // Create organization Controller Web Api 
 //add using statements
 
+using System.Security.Claims;
 using AgentCheckListApi.Enums;
 using AgentCheckListApi.Helper;
 using AgentCheckListApi.Interfaces;
@@ -183,6 +184,7 @@ namespace AgentCheckListApi.Controllers
                     Role = UserRole.AgentField
                 };
                 user.OrganizationId = id;
+                user.OrgAdminId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
                 var ServiceResult = _registerationService.RegisterUser(user, permission);
                 if (!ServiceResult.Success)
                     return NotFound(ServiceResult.Message);
@@ -228,6 +230,7 @@ namespace AgentCheckListApi.Controllers
             if (organization is null)
                 return NotFound("Organization not found");
             user.OrganizationId = id;
+            user.OrgAdminId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var ServiceResult = _registerationService.UpdateUser(userId, user);
 
             if (!ServiceResult.Success)
@@ -257,6 +260,52 @@ namespace AgentCheckListApi.Controllers
         {
             var listCheckList = _inspectionService.GetCheckListsByOrganizationId(id);
             return Ok(listCheckList);
+        }
+        [HttpPost("{id}/OrganizationAdmin")]
+        public IActionResult PostOrganizationAdmin(string id, [FromBody] User user)
+        {
+            if (user == null)
+                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest();
+            if (id is null)
+                return BadRequest();
+            Permission permission1 = new Permission
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                IsActive = user.IsActive,
+                UserMobileNumber = user.UserMobileNumber,
+                Role = UserRole.OrgAdmin,
+            };
+            var userid = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            if (userid is null)
+                return BadRequest();
+            ServiceResult serviceResult = _registerationService.RegisterOrganizationAdmin(user, permission1, userid.Value);
+            if (!serviceResult.Success)
+                return BadRequest(serviceResult.Message);
+            return Ok(user);
+        }
+        // Put: api/User/{id}/OrganizationAdmin
+        [HttpPut("{id}/OrganizationAdmin")]
+        public IActionResult PutOrganizationAdmin(string id, [FromBody] User user)
+        {
+            try
+            {
+                if (user == null)
+                    return BadRequest();
+                if (!ModelState.IsValid)
+                    return BadRequest();
+                //new Permission{Id = ObjectId.GenerateNewId().ToString(), UserMobileNumber = user.UserMobileNumber, Role = UserRole.OrgAdmin , IsActive = user.IsActive}
+
+                ServiceResult serviceResult = _registerationService.UpdateOrganizationAdmin(user, new Permission { Id = ObjectId.GenerateNewId().ToString(), IsActive = user.IsActive, UserMobileNumber = user.UserMobileNumber, Role = UserRole.OrgAdmin });
+
+                return Ok(serviceResult);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return BadRequest(ModelState);
+            }
         }
 
     }

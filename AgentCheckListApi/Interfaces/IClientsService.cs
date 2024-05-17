@@ -13,5 +13,9 @@ namespace AgentCheckListApi.Interfaces
         //Get ALl Directory
         public ServiceResult GetDirectories();
 
+        // get All directory For User 
+
+        public ServiceResult GetDirectoriesForUser(string id);
+
     }
 }
