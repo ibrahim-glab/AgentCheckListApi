@@ -22,7 +22,7 @@ namespace AgentCheckListApi.Controllers
         private readonly MongoDbService<Organization> _mongoDbService;
         private readonly IRegisterationService _registerationService;
         private readonly IInspectionService _inspectionService;
-        public OrganizationController(IRegisterationService regestirationService, ILogger<OrganizationController> logger, MongoDbService<Organization> mongoDbService , IInspectionService inspectionService)
+        public OrganizationController(IRegisterationService regestirationService, ILogger<OrganizationController> logger, MongoDbService<Organization> mongoDbService, IInspectionService inspectionService)
         {
             _logger = logger;
             _mongoDbService = mongoDbService;
@@ -32,29 +32,29 @@ namespace AgentCheckListApi.Controllers
 
 
         //Get: api/Organization All
-        [Authorize(Roles ="SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet]
         public IActionResult Get()
         {
             var collection = _mongoDbService.GetCollection<Organization>("organizations");
-            var list = collection.Find(FilterDefinition<Organization>.Empty).ToList();
+            var list = collection.Find<Organization>(FilterDefinition<Organization>.Empty).ToList();
             return Ok(list);
         }
 
         //Get   : api/Organization/{id}
-        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
             var collection = _mongoDbService.GetCollection<Organization>("organizations");
             var filterid = Builders<Organization>.Filter.Eq("_id", ObjectId.Parse(id));
-            var list = collection.Find(filterid);
+            var list = collection.Find(filterid).FirstOrDefault();
             return Ok(list);
         }
 
         //Post : api/Organization
-        [Authorize(Roles ="SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         public IActionResult Post([FromBody] Organization organization)
         {
@@ -87,7 +87,7 @@ namespace AgentCheckListApi.Controllers
             }
 
         }
-        [Authorize(Roles ="SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
 
         //Put : api/Organization/{id} Mongo 
         [HttpPut("{id}")]
@@ -135,7 +135,7 @@ namespace AgentCheckListApi.Controllers
 
         }
 
-        [Authorize(Roles ="SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         // api/Organization/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
@@ -159,7 +159,7 @@ namespace AgentCheckListApi.Controllers
 
         }
         // Post: api/Organization/{id}/Users
-        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
 
         [HttpPost("{id}/Users")]
         public IActionResult Post(string id, [FromBody] User user)
@@ -175,14 +175,15 @@ namespace AgentCheckListApi.Controllers
             }
             try
             {
-                Permission permission = new Permission{
+                Permission permission = new Permission
+                {
                     Id = ObjectId.GenerateNewId().ToString(),
-                    IsActive= user.IsActive,
+                    IsActive = user.IsActive,
                     UserMobileNumber = user.UserMobileNumber,
                     Role = UserRole.AgentField
                 };
                 user.OrganizationId = id;
-                var ServiceResult = _registerationService.RegisterUser(user , permission);
+                var ServiceResult = _registerationService.RegisterUser(user, permission);
                 if (!ServiceResult.Success)
                     return NotFound(ServiceResult.Message);
                 return Ok(user);
@@ -193,7 +194,7 @@ namespace AgentCheckListApi.Controllers
             }
 
         }
-        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
         //get:api/Organization/{id}/Users/{userId}
         [HttpGet("{id}/Users/{userId}")]
         public IActionResult Get(string id, string userId)
@@ -203,7 +204,7 @@ namespace AgentCheckListApi.Controllers
                 return NotFound(ServiceResult.Message);
             return Ok(ServiceResult.Data);
         }
-        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
         // api/Organization/{id}/Users/{userId}
         [HttpDelete("{id}/Users/{userId}")]
         public IActionResult Delete(string id, string userId)
@@ -214,7 +215,7 @@ namespace AgentCheckListApi.Controllers
 
             return Ok(ServiceResult.Data);
         }
-        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
         // api/Organization/{id}/Users/{userId}
         [HttpPut("{id}/Users/{userId}")]
         public IActionResult Put(string id, string userId, [FromBody] User user)
@@ -234,7 +235,7 @@ namespace AgentCheckListApi.Controllers
 
             return Ok(ServiceResult.Data);
         }
-        [Authorize(Roles ="SuperAdmin,OrgAdmin")]
+        [Authorize(Roles = "SuperAdmin,OrgAdmin")]
         //api: Organization/{id}/Users
         [HttpGet("{id}/Users")]
         public IActionResult GetOrgnizationUsers(string id)
@@ -254,10 +255,10 @@ namespace AgentCheckListApi.Controllers
         [HttpGet("{id}/CheckLists")]
         public IActionResult GetOrgnizationCheckLists(string id)
         {
-           var listCheckList = _inspectionService.GetCheckListsByOrganizationId(id);
-           return Ok(listCheckList);
+            var listCheckList = _inspectionService.GetCheckListsByOrganizationId(id);
+            return Ok(listCheckList);
         }
-        
+
     }
 }
 
