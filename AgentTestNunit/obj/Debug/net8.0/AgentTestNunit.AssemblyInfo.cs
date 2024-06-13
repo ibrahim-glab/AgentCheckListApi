@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AgentTestNunit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae724f7d768e38e84a83425cefce44b76c668f97")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83157537ff1791f9bebd1b644fa2f5bcc0dc43df")]
 [assembly: System.Reflection.AssemblyProductAttribute("AgentTestNunit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AgentTestNunit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
