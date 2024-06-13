@@ -1511,21 +1511,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Bebo\\source\\repos\\AgentCheckListApi\\AgentCheckListApi\\AgentCheckListApi.csproj",
+      "projectUniqueName": "C:\\Users\\Bebo\\Agent\\AgentCheckListApi\\AgentCheckListApi\\AgentCheckListApi.csproj",
       "projectName": "AgentCheckListApi",
-      "projectPath": "C:\\Users\\Bebo\\source\\repos\\AgentCheckListApi\\AgentCheckListApi\\AgentCheckListApi.csproj",
+      "projectPath": "C:\\Users\\Bebo\\Agent\\AgentCheckListApi\\AgentCheckListApi\\AgentCheckListApi.csproj",
       "packagesPath": "C:\\Users\\Bebo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Bebo\\source\\repos\\AgentCheckListApi\\AgentCheckListApi\\obj\\",
+      "outputPath": "C:\\Users\\Bebo\\Agent\\AgentCheckListApi\\AgentCheckListApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Bebo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Bebo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1538,6 +1536,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -1576,7 +1579,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

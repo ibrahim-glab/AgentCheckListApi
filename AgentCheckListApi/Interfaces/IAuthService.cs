@@ -5,8 +5,9 @@ using AgentCheckListApi.Model;
 
 namespace AgentCheckListApi.Interfaces
 {
-    public interface IAuthService 
+    public interface IAuthService
     {
-        public ServiceResult Authnticate(string userName , string password);
+        public ServiceResult Authnticate(string userName, string password);
     }
+
 }

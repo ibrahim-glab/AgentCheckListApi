@@ -10,7 +10,7 @@ namespace AgentCheckListApi.Services
     public class MongoDbService<T> where T : class
     {
         private readonly IMongoDatabase _database;
-        
+
         public MongoDbService(IOptions<MongoDb> configuration)
         {
             var client = new MongoClient(configuration.Value.ConnectionString);
@@ -22,8 +22,8 @@ namespace AgentCheckListApi.Services
             return _database.GetCollection<T>(name);
         }
 
-     
 
-        
+
+
     }
 }
